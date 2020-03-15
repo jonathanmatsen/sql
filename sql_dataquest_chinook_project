@@ -1,0 +1,59 @@
+%%sql
+CREATE VIEW sales_analysis AS
+    SELECT
+        c.country country,
+        COUNT(DISTINCT c.customer_id) total_num_customers,
+        SUM(il.unit_price * il.quantity) total_sales,
+        AVG(il.unit_price * il.quantity) avg_order_value
+    FROM customer c
+    INNER JOIN invoice i ON i.customer_id = c.customer_id
+    INNER JOIN invoice_line il ON il.invoice_id = i.invoice_id
+    GROUP BY 1
+    ORDER BY 2 DESC;
+
+
+
+
+    %%sql
+SELECT
+    country,
+    total_num_customers,
+    total_sales,
+    avg_order_value
+FROM
+    (
+    SELECT
+        sa.*,
+        CASE
+            WHEN (
+                SELECT
+                    sa.total_num_customers
+                FROM sales_analysis sa
+            ) < 2
+            THEN sa.country == "Other"
+            ELSE sa.country
+        END AS sort
+    FROM sales_analysis sa
+    )
+GROUP BY sort
+ORDER BY 2 DESC;
+
+#### VALUE CHECKING (STEP 5)
+
+Moving on to next problem for times' sake, but got stuck on:
+- how to calcualte average_value_sales_per_customer
+- using the CASE method technique to force all the countries with 1 customer into an aggregate 'other' category
+
+%%sql
+SELECT *
+FROM invoice_line il
+INNER JOIN invoice i ON i.invoice_id = il.invoice_id;
+
+
+%%sql
+SELECT
+    COUNT(DISTINCT c.customer_id),
+    SUM(i.total)
+FROM invoice i
+INNER JOIN customer c ON c.customer_id = i.customer_id
+WHERE c.country = 'Czech Republic';
