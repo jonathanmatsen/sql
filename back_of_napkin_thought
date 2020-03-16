@@ -1,0 +1,3 @@
+WHERE CASE
+        WHEN total_num_customers < 2 THEN c.country = 'Other'
+        ELSE c.country
