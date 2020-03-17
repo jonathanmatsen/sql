@@ -4,3 +4,14 @@ conn.autocommit = True
 cur = conn.cursor()
 cur.execute("CREATE TABLE facts(id integer PRIMARY KEY, country text, value text)")
 conn.close()
+
+conn = psycopg2.connect("dbname=dq user=dq")
+cur = conn.cursor()
+
+cur.execute("SELECT * FROM notes;")
+
+rows = cur.fetchall()
+
+print(rows)
+
+conn.close()
