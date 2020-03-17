@@ -1,0 +1,9 @@
+query_plan_one = conn.execute("EXPLAIN QUERY PLAN SELECT * FROM facts WHERE area > 40000;").fetchall()
+
+query_plan_two = conn.execute("EXPLAIN QUERY PLAN SELECT area FROM facts WHERE area > 40000;").fetchall()
+
+query_plan_three = conn.execute("EXPLAIN QUERY PLAN SELECT name FROM facts WHERE name = 'Czech Republic';").fetchall()
+
+print(query_plan_one)
+print(query_plan_two)
+print(query_plan_three)
