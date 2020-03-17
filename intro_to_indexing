@@ -7,3 +7,14 @@ query_plan_three = conn.execute("EXPLAIN QUERY PLAN SELECT name FROM facts WHERE
 print(query_plan_one)
 print(query_plan_two)
 print(query_plan_three)
+
+# -------
+
+query_plan_six = conn.execute("EXPLAIN QUERY PLAN SELECT * FROM facts WHERE population > 10000;").fetchall()
+
+print(query_plan_six)
+
+conn.execute("CREATE INDEX IF NOT EXISTS pop_idx ON facts(population);")
+
+query_plan_seven = conn.execute("EXPLAIN QUERY PLAN SELECT * FROM facts WHERE population > 10000;").fetchall()
+print(query_plan_seven)
