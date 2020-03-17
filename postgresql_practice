@@ -1,9 +1,6 @@
 import psycopg2
 conn = psycopg2.connect("dbname=dq user=dq")
+conn.autocommit = True
 cur = conn.cursor()
-
-cur.execute("CREATE TABLE notes (id INTEGER PRIMARY KEY, body TEXT, title TEXT)")
-
-conn.commit()
-
+cur.execute("CREATE TABLE facts(id integer PRIMARY KEY, country text, value text)")
 conn.close()
