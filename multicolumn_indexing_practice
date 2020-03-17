@@ -7,3 +7,12 @@ conn.execute("CREATE INDEX IF NOT EXISTS pop_growth_idx ON facts(population_grow
 query_plan_two = conn.execute("EXPLAIN QUERY PLAN SELECT * FROM facts WHERE population > 1000000 AND population_growth < 0.05;").fetchall()
 
 print(query_plan_two)
+
+
+conn = sqlite3.connect("factbook.db")
+
+conn.execute("CREATE INDEX IF NOT EXISTS pop_pop_growth_idx ON facts(population, population_growth);").fetchall()
+
+query_plan_three = conn.execute("EXPLAIN QUERY PLAN SELECT * FROM facts WHERE population > 1000000 AND population_growth < 0.05;").fetchall()
+
+print(query_plan_three)
