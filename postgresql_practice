@@ -1,0 +1,9 @@
+import psycopg2
+conn = psycopg2.connect("dbname=dq user=dq")
+cur = conn.cursor()
+
+cur.execute("CREATE TABLE notes (id INTEGER PRIMARY KEY, body TEXT, title TEXT)")
+
+conn.commit()
+
+conn.close()
